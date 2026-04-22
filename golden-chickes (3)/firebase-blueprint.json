@@ -1,0 +1,44 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "An egg hatching order",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string", "description": "Name of the customer" },
+        "customerNumber": { "type": "string", "description": "Phone number of the customer" },
+        "totalEggs": { "type": "number", "description": "Number of eggs for hatching" },
+        "address": { "type": "string", "description": "Delivery address" },
+        "totalPrice": { "type": "number", "description": "Total cost of the order" },
+        "dueAmount": { "type": "number", "description": "Remaining balance" },
+        "orderDate": { "type": "string", "format": "date-time", "description": "Date order was placed" },
+        "hatchDate": { "type": "string", "format": "date-time", "description": "Expected hatching date (21 days later)" },
+        "status": { "type": "string", "enum": ["pending", "hatching", "completed", "cancelled"], "description": "Current status of the order" },
+        "uid": { "type": "string", "description": "User ID of the customer" }
+      },
+      "required": ["customerName", "customerNumber", "totalEggs", "totalPrice", "orderDate", "hatchDate", "status"]
+    },
+    "User": {
+      "title": "User",
+      "description": "System user profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "name": { "type": "string", "description": "Display name" },
+        "email": { "type": "string", "description": "Email address" },
+        "role": { "type": "string", "enum": ["admin", "customer"], "description": "User role" }
+      },
+      "required": ["uid", "name", "role"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": { "$ref": "Order" },
+      "description": "Collection of hatching orders"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "User profile data"
+    }
+  }
+}
